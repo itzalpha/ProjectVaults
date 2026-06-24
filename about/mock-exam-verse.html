@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mock Exam Verse — Smarter Exam Preparation for Nigerian Students</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  :root {
+    --orange: #E8640A;
+    --bg: #FBF8F5;
+    --dark: #1A0D04;
+    --card: #FFFFFF;
+    --muted: #8A7A6B;
+    --border: #EDE5DC;
+    --accent: #FDEEDE;
+  }
+  body {
+    background: var(--bg);
+    color: var(--dark);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--dark); color: rgba(255,255,255,0.55);
+    text-align:center; font-size:.78rem; padding:10px 20px; letter-spacing:.3px;
+  }
+  .topbar a { color:#FFB26B; text-decoration:none; font-weight:500; }
+  .topbar a:hover { text-decoration:underline; }
+
+  /* NAV */
+  nav {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 7%; border-bottom:1px solid var(--border);
+    background:var(--bg); position:sticky; top:0; z-index:50;
+  }
+  .logo {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem;
+    color:var(--dark); letter-spacing:-.5px;
+    display:flex; align-items:center; gap:8px; text-decoration:none;
+  }
+  .logo-mark {
+    width:28px; height:28px; background:var(--orange);
+    border-radius:8px; display:flex; align-items:center; justify-content:center;
+  }
+  .logo-mark svg { width:15px; height:15px; }
+  .nav-right { display:flex; align-items:center; gap:18px; }
+  .versecity-link {
+    font-size:.82rem; color:var(--muted); text-decoration:none;
+    font-weight:500; transition:color .2s;
+  }
+  .versecity-link:hover { color:var(--dark); }
+  .nav-cta {
+    background:var(--dark); color:#fff;
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:.82rem; padding:10px 20px; border-radius:50px;
+    text-decoration:none; transition:background .2s;
+  }
+  .nav-cta:hover { background:#2e1a0a; }
+
+  /* HERO */
+  .hero {
+    padding:80px 7% 70px; max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  .eco-pill {
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--accent); border:1px solid rgba(232,100,10,0.18);
+    border-radius:50px; padding:5px 14px 5px 7px;
+    font-size:.74rem; color:#7a3000; font-weight:500;
+    margin-bottom:22px; text-decoration:none; transition:background .2s;
+  }
+  .eco-pill:hover { background:#fcdcba; }
+  .eco-pill-badge {
+    width:18px; height:18px; background:var(--orange); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.58rem; color:#fff; font-weight:800;
+  }
+  h1 {
+    font-family:'Syne',sans-serif; font-size:clamp(2.4rem,4vw,3.5rem);
+    font-weight:800; line-height:1.07; letter-spacing:-1.5px;
+    color:var(--dark); margin-bottom:18px;
+  }
+  h1 .hl { color:var(--orange); }
+  .hero-desc {
+    font-size:.98rem; color:var(--muted); line-height:1.78;
+    margin-bottom:32px; max-width:400px;
+  }
+  .hero-btns { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .btn-dark {
+    background:var(--dark); color:#fff;
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:.86rem; padding:13px 24px; border-radius:50px;
+    text-decoration:none; display:flex; align-items:center; gap:7px; transition:all .2s;
+  }
+  .btn-dark:hover { background:#2e1a0a; transform:translateY(-1px); }
+  .btn-ghost { color:var(--muted); font-size:.86rem; font-weight:500; text-decoration:none; transition:color .2s; }
+  .btn-ghost:hover { color:var(--dark); }
+  .hero-stats {
+    display:flex; gap:28px; margin-top:36px;
+    padding-top:28px; border-top:1px solid var(--border);
+  }
+  .stat strong {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:1.45rem; letter-spacing:-1px; color:var(--dark); display:block;
+  }
+  .stat strong span { color:var(--orange); }
+  .stat small { font-size:.76rem; color:var(--muted); }
+
+  /* APP CARD */
+  .hero-right { position:relative; }
+  .float-pill {
+    position:absolute; background:#fff; border-radius:50px;
+    padding:7px 14px; box-shadow:0 6px 24px rgba(0,0,0,0.09);
+    font-size:.73rem; font-weight:600; display:flex; align-items:center;
+    gap:6px; white-space:nowrap; z-index:2;
+  }
+  .fp-top { top:-14px; right:16px; }
+  .fp-bot { bottom:-12px; left:16px; color:var(--muted); }
+  .fp-dot { width:7px; height:7px; border-radius:50%; background:var(--orange); flex-shrink:0; }
+  .fp-dot.y { background:#FFD166; }
+  .app-card {
+    background:var(--dark); border-radius:22px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(26,13,4,0.18);
+  }
+  .ac-bar {
+    padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.06);
+    display:flex; align-items:center; gap:7px;
+  }
+  .acd { width:7px; height:7px; border-radius:50%; }
+  .ac-bar-url { flex:1; height:14px; background:rgba(255,255,255,0.05); border-radius:5px; margin:0 8px; }
+  .ac-body { padding:18px; display:flex; flex-direction:column; gap:11px; }
+  .ac-welcome {
+    background:rgba(232,100,10,0.1); border:1px solid rgba(232,100,10,0.18);
+    border-radius:12px; padding:16px;
+  }
+  .ac-wt { font-family:'Syne',sans-serif; font-weight:700; font-size:.88rem; color:#fff; margin-bottom:3px; }
+  .ac-ws { font-size:.7rem; color:rgba(255,255,255,0.38); }
+  .ac-tiles { display:flex; gap:9px; }
+  .ac-tile {
+    flex:1; border-radius:10px; padding:12px 10px;
+    border:1px solid rgba(255,255,255,0.05);
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .ac-tile-ico { font-size:1rem; }
+  .ac-tile-lbl { font-size:.65rem; color:rgba(255,255,255,0.4); font-weight:500; }
+  .ac-tile-val { font-family:'Syne',sans-serif; font-size:.78rem; color:#fff; font-weight:700; }
+  .ac-rows { display:flex; flex-direction:column; gap:6px; }
+  .ac-row-item {
+    display:flex; align-items:center; gap:9px;
+    background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+    border-radius:9px; padding:9px 11px;
+  }
+  .ac-ri-ico {
+    width:28px; height:28px; border-radius:7px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.8rem; flex-shrink:0;
+  }
+  .ac-ri-body { flex:1; }
+  .ac-ri-t { font-size:.73rem; color:rgba(255,255,255,0.8); font-weight:500; }
+  .ac-ri-s { font-size:.64rem; color:rgba(255,255,255,0.28); }
+  .ac-badge { font-size:.62rem; padding:2px 8px; border-radius:20px; font-weight:600; flex-shrink:0; }
+
+  /* FEATURES */
+  .features { padding:70px 7%; max-width:1080px; margin:0 auto; }
+  .sec-label {
+    text-align:center; font-size:.73rem; font-weight:700;
+    letter-spacing:2.5px; text-transform:uppercase; color:var(--orange); margin-bottom:10px;
+  }
+  .sec-title {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:clamp(1.65rem,2.8vw,2.2rem); letter-spacing:-1px;
+    text-align:center; color:var(--dark); margin-bottom:44px;
+  }
+  .feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .feat-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:26px 22px; transition:all .22s;
+  }
+  .feat-card:hover {
+    border-color:rgba(232,100,10,0.25);
+    box-shadow:0 6px 24px rgba(232,100,10,0.07);
+    transform:translateY(-3px);
+  }
+  .feat-card .ico { font-size:1.4rem; margin-bottom:13px; display:block; }
+  .feat-card h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:.9rem; color:var(--dark); margin-bottom:7px; }
+  .feat-card p { font-size:.82rem; color:var(--muted); line-height:1.65; }
+
+  /* ── SCREENSHOTS — exact Campus Verse pattern ── */
+  .screenshots { background: var(--dark); padding: 80px 7%; }
+  .screenshots .inner { max-width:1080px; margin:0 auto; }
+  .screenshots .sec-label { color:#FFB26B; }
+  .screenshots .sec-title { color:#fff; margin-bottom:16px; }
+  .ss-sub {
+    text-align:center; color:rgba(255,255,255,0.4);
+    font-size:.88rem; margin-bottom:52px; line-height:1.6;
+  }
+  .ss-track-wrap { position:relative; }
+  .ss-track {
+    display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding-bottom:12px; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .ss-track::-webkit-scrollbar { display:none; }
+  .ss-slide {
+    flex:0 0 260px; scroll-snap-align:start; border-radius:18px; overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08); background:#161008;
+    transition:all .3s; cursor:pointer; position:relative;
+  }
+  .ss-slide:hover {
+    border-color:rgba(232,100,10,0.4);
+    transform:translateY(-5px);
+    box-shadow:0 16px 40px rgba(0,0,0,0.4);
+  }
+  .ss-frame {
+    width:100%; aspect-ratio:9/18; position:relative; overflow:hidden;
+    background:#0f0904; display:flex; align-items:center; justify-content:center;
+  }
+  .ss-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+  .ss-placeholder {
+    width:100%; height:100%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:12px; padding:24px; text-align:center;
+  }
+  .ss-ui { width:100%; height:100%; padding:14px; display:flex; flex-direction:column; gap:8px; }
+  .ss-ui-bar {
+    display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px;
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);
+  }
+  .ss-ui-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .ss-ui-line { height:5px; border-radius:3px; flex:1; background:rgba(255,255,255,0.08); }
+  .ss-ui-block { border-radius:10px; padding:12px; display:flex; flex-direction:column; gap:7px; }
+  .ss-ui-h { height:9px; border-radius:3px; background:rgba(255,255,255,0.15); }
+  .ss-ui-s { height:6px; border-radius:3px; background:rgba(255,255,255,0.07); }
+  .ss-ui-row { display:flex; gap:6px; }
+  .ss-ui-card {
+    flex:1; border-radius:8px; padding:10px; background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.05); display:flex; flex-direction:column; gap:5px;
+  }
+  .ss-ui-ico { font-size:.9rem; margin-bottom:2px; }
+  .ss-ui-list { display:flex; flex-direction:column; gap:5px; }
+  .ss-ui-item {
+    display:flex; align-items:center; gap:7px; background:rgba(255,255,255,0.03);
+    border-radius:7px; padding:7px 8px; border:1px solid rgba(255,255,255,0.05);
+  }
+  .ss-ui-av { width:22px; height:22px; border-radius:50%; flex-shrink:0; }
+  .ss-ui-tl { flex:1; display:flex; flex-direction:column; gap:3px; }
+  .ss-ui-lx { height:5px; border-radius:2px; background:rgba(255,255,255,0.12); }
+  .ss-caption {
+    padding:12px 16px; border-top:1px solid rgba(255,255,255,0.06);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .ss-caption span { font-family:'Syne',sans-serif; font-weight:700; font-size:.76rem; color:rgba(255,255,255,0.7); }
+  .ss-tag { font-size:.64rem; padding:2px 9px; border-radius:20px; font-weight:600; border:1px solid; }
+  .ss-arrows { display:flex; justify-content:center; gap:10px; margin-top:28px; }
+  .ss-arrow {
+    width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .2s; color:rgba(255,255,255,0.6); font-size:.9rem; user-select:none;
+  }
+  .ss-arrow:hover { background:rgba(232,100,10,0.18); border-color:rgba(232,100,10,0.35); color:#fff; }
+  .ss-dots { display:flex; justify-content:center; gap:6px; margin-top:20px; }
+  .ss-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(255,255,255,0.2); transition:all .3s; cursor:pointer;
+  }
+  .ss-dot.active { width:20px; border-radius:4px; background:var(--orange); }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.88);
+    display:none; align-items:center; justify-content:center;
+    padding:20px; backdrop-filter:blur(8px);
+  }
+  .lightbox.open { display:flex; }
+  .lightbox-img { max-height:90vh; max-width:90vw; border-radius:18px; object-fit:contain; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+  .lightbox-close {
+    position:absolute; top:20px; right:24px;
+    color:rgba(255,255,255,0.7); font-size:1.6rem; cursor:pointer;
+    transition:color .2s; line-height:1; background:none; border:none; font-weight:300;
+  }
+  .lightbox-close:hover { color:#fff; }
+  .lightbox-nav {
+    position:absolute; top:50%; transform:translateY(-50%);
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15);
+    color:#fff; width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .2s; font-size:1rem;
+  }
+  .lightbox-nav:hover { background:rgba(232,100,10,0.25); border-color:rgba(232,100,10,0.45); }
+  .lightbox-prev { left:16px; }
+  .lightbox-next { right:16px; }
+  .lightbox-caption {
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    background:rgba(0,0,0,0.6); color:rgba(255,255,255,0.8);
+    padding:8px 20px; border-radius:50px; font-size:.8rem;
+    font-family:'Syne',sans-serif; font-weight:600; white-space:nowrap;
+  }
+
+  /* CTA */
+  .cta-wrap { padding:0 7% 70px; max-width:1080px; margin:0 auto; }
+  .cta-box {
+    background:var(--dark); border-radius:22px; padding:52px 56px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:36px; flex-wrap:wrap; position:relative; overflow:hidden;
+  }
+  .cta-box::before {
+    content:''; position:absolute; top:-60px; right:-60px; width:260px; height:260px;
+    background:radial-gradient(circle,rgba(232,100,10,0.14) 0%,transparent 70%); pointer-events:none;
+  }
+  .cta-box h2 {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:clamp(1.5rem,2.2vw,1.9rem); letter-spacing:-1px;
+    color:#fff; margin-bottom:8px;
+  }
+  .cta-box p { color:rgba(255,255,255,0.42); font-size:.88rem; max-width:360px; line-height:1.7; }
+  .cta-btns { display:flex; gap:11px; flex-wrap:wrap; flex-shrink:0; }
+  .btn-orange {
+    background:var(--orange); color:#fff;
+    font-family:'Syne',sans-serif; font-weight:700; font-size:.86rem;
+    padding:12px 24px; border-radius:50px; text-decoration:none;
+    display:flex; align-items:center; gap:7px; transition:all .2s; white-space:nowrap;
+  }
+  .btn-orange:hover { background:#c8540a; transform:translateY(-1px); }
+  .btn-ghost-white {
+    border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.6);
+    font-family:'Syne',sans-serif; font-weight:600; font-size:.83rem;
+    padding:12px 20px; border-radius:50px; text-decoration:none;
+    transition:all .2s; white-space:nowrap;
+  }
+  .btn-ghost-white:hover { border-color:rgba(255,255,255,0.32); color:#fff; }
+
+  /* FOOTER */
+  .footer-wrap {
+    border-top:1px solid var(--border); padding:24px 7%;
+    max-width:1080px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  }
+  .footer-wrap p { font-size:.78rem; color:var(--muted); }
+  .footer-wrap p a { color:var(--dark); font-weight:600; text-decoration:none; }
+  .footer-wrap p a:hover { color:var(--orange); }
+  .footer-links { display:flex; gap:18px; }
+  .footer-links a { font-size:.76rem; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .footer-links a:hover { color:var(--dark); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  .hero-left > * { animation:fadeUp .6s ease both; }
+  .hero-left > *:nth-child(1){animation-delay:.04s}
+  .hero-left > *:nth-child(2){animation-delay:.12s}
+  .hero-left > *:nth-child(3){animation-delay:.2s}
+  .hero-left > *:nth-child(4){animation-delay:.28s}
+  .hero-left > *:nth-child(5){animation-delay:.36s}
+  .hero-right{animation:fadeUp .7s .18s ease both}
+
+  /* RESPONSIVE */
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;padding:56px 6% 48px;gap:40px}
+    .hero-right{display:none}
+    .feat-grid{grid-template-columns:1fr 1fr}
+    .cta-box{padding:36px 28px}
+    nav{padding:16px 5%}
+    .ss-slide{flex:0 0 200px}
+  }
+  @media(max-width:540px){
+    .feat-grid{grid-template-columns:1fr}
+    h1{font-size:2.1rem}
+    .cta-box{flex-direction:column}
+    .footer-wrap{flex-direction:column;align-items:flex-start}
+    .ss-slide{flex:0 0 160px}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  Part of the <a href="https://versecity-edutech-sector.web.app/" target="_blank">VerseCity Technology Ecosystem</a> — building products for Nigerian students &amp; communities.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h9M2 12h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="12" r="2" fill="#fff"/></svg>
+    </div>
+    Mock Exam Verse
+  </a>
+  <div class="nav-right">
+    <a href="https://versecity-edutech-sector.web.app/" target="_blank" class="versecity-link">VerseCity ↗</a>
+    <a href="#download" class="nav-cta">Download App</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <a href="https://versecity-edutech-sector.web.app/" target="_blank" class="eco-pill">
+      <div class="eco-pill-badge">VC</div>
+      A VerseCity Technology Product
+    </a>
+    <h1>Study Smarter.<br><span class="hl">Pass JAMB, WAEC &amp; NECO.</span></h1>
+    <p class="hero-desc">Mock Exam Verse gives Nigerian students a structured, digital space to practice past questions, sit simulated mock exams, and compete in quiz tournaments — all in one app.</p>
+    <div class="hero-btns">
+      <a href="#download" class="btn-dark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.33.19.7.24 1.07.14L15.84 12 4.25.1C3.88 0 3.51.05 3.18.24 2.49.63 2 1.42 2 2.37v19.26c0 .95.49 1.74 1.18 2.13zM17.4 13.56 6.95 24l9.02-5.21 1.43-5.23zM22.1 10.3c-.48-.28-1.12-.44-1.72-.12L18.7 11.3l1.6.7 1.68.97c.6.32 1.24.16 1.72-.12.72-.41 1.06-1.1 1.06-1.7 0-.58-.34-1.28-1.06-1.55zM6.95 0 17.4 10.44 15.97 5.21 6.95 0z"/></svg>
+        Get on Play Store
+      </a>
+      <a href="#features" class="btn-ghost">See features →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>79<span>+</span></strong><small>Registered Users</small></div>
+      <div class="stat"><strong>1.7M<span>+</span></strong><small>JAMB candidates/yr</small></div>
+      <div class="stat"><strong>₦2,050</strong><small>Early Revenue</small></div>
+    </div>
+  </div>
+
+  <!-- APP CARD -->
+  <div class="hero-right">
+    <div class="float-pill fp-top">
+      <div class="fp-dot"></div> Mock exam in progress
+    </div>
+    <div class="app-card">
+      <div class="ac-bar">
+        <div class="acd" style="background:#FF5F57"></div>
+        <div class="acd" style="background:#FEBC2E"></div>
+        <div class="acd" style="background:#28C840"></div>
+        <div class="ac-bar-url"></div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-welcome">
+          <div class="ac-wt">📚 Welcome back, Student</div>
+          <div class="ac-ws">Your JAMB mock exam is ready — 60 questions, 45 mins</div>
+        </div>
+        <div class="ac-tiles">
+          <div class="ac-tile" style="background:rgba(232,100,10,0.08)">
+            <div class="ac-tile-ico">📝</div>
+            <div class="ac-tile-lbl">Mock Exams</div>
+            <div class="ac-tile-val">Practice</div>
+          </div>
+          <div class="ac-tile" style="background:rgba(255,209,102,0.07)">
+            <div class="ac-tile-ico">🏆</div>
+            <div class="ac-tile-lbl">Tournaments</div>
+            <div class="ac-tile-val">Compete</div>
+          </div>
+          <div class="ac-tile" style="background:rgba(52,152,219,0.07)">
+            <div class="ac-tile-ico">📖</div>
+            <div class="ac-tile-lbl">Bookstore</div>
+            <div class="ac-tile-val">Study</div>
+          </div>
+        </div>
+        <div class="ac-rows">
+          <div class="ac-row-item">
+            <div class="ac-ri-ico" style="background:rgba(232,100,10,0.15)">📝</div>
+            <div class="ac-ri-body">
+              <div class="ac-ri-t">JAMB 2024 — Full Mock Exam</div>
+              <div class="ac-ri-s">Mathematics · English · Physics · Chemistry</div>
+            </div>
+            <div class="ac-badge" style="background:rgba(232,100,10,0.12);color:#E8640A;">Start</div>
+          </div>
+          <div class="ac-row-item">
+            <div class="ac-ri-ico" style="background:rgba(52,152,219,0.15)">📘</div>
+            <div class="ac-ri-body">
+              <div class="ac-ri-t">WAEC Past Questions — 2023</div>
+              <div class="ac-ri-s">10 subjects available</div>
+            </div>
+            <div class="ac-badge" style="background:rgba(52,152,219,0.12);color:#3498DB;">Free</div>
+          </div>
+          <div class="ac-row-item">
+            <div class="ac-ri-ico" style="background:rgba(255,209,102,0.15)">🏆</div>
+            <div class="ac-ri-body">
+              <div class="ac-ri-t">Weekly Quiz Tournament — NECO</div>
+              <div class="ac-ri-s">Prize pool available · 12 participants</div>
+            </div>
+            <div class="ac-badge" style="background:rgba(255,209,102,0.12);color:#a07800;">Join</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="float-pill fp-bot">
+      <div class="fp-dot y"></div> 1.7M+ students need this every year
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features" id="features">
+  <div class="sec-label">What We Offer</div>
+  <h2 class="sec-title">Everything you need to pass your exams.</h2>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="ico">📝</span>
+      <h3>Simulated Mock Exams</h3>
+      <p>Practice under real exam conditions with timed, simulated mock exams for JAMB, WAEC, and NECO. Know exactly what to expect on exam day.</p>
+    </div>
+    <div class="feat-card">
+      <span class="ico">📖</span>
+      <h3>Past Question Practice</h3>
+      <p>Work through past examination questions directly within the app. Understand patterns, identify weak areas, and build confidence before the real thing.</p>
+    </div>
+    <div class="feat-card">
+      <span class="ico">🏆</span>
+      <h3>Competitive Quiz Tournaments</h3>
+      <p>Compete with other students in quiz tournaments based on JAMB, WAEC, and NECO topics. Win prizes and stay motivated while you learn.</p>
+    </div>
+    <div class="feat-card">
+      <span class="ico">📚</span>
+      <h3>Digital Bookstore</h3>
+      <p>Browse and purchase affordable digital study materials for major exams — all curated and organized in one place for easy access.</p>
+    </div>
+    <div class="feat-card">
+      <span class="ico">📊</span>
+      <h3>Performance Tracking</h3>
+      <p>See your scores, track your progress over time, and know exactly where you need to improve before exam day arrives.</p>
+    </div>
+    <div class="feat-card">
+      <span class="ico">🎯</span>
+      <h3>JAMB, WAEC &amp; NECO Ready</h3>
+      <p>Purpose-built for Nigeria's three major national examinations. No generic content — every question, subject, and material is relevant to you.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SCREENSHOTS -->
+<div class="screenshots" id="screenshots">
+  <div class="inner">
+    <div class="sec-label">The App</div>
+    <h2 class="sec-title">See Mock Exam Verse in action.</h2>
+    <p class="ss-sub">A look inside the app — from mock exams to tournaments and the digital bookstore.<br>Tap any screen to view it full size.</p>
+
+    <div class="ss-track-wrap">
+      <div class="ss-track" id="ssTrack">
+
+        <!-- SLIDE 1 — Home Dashboard -->
+        <div class="ss-slide" onclick="openLightbox(0)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-1.png" alt="Home Dashboard" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--orange)"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="background:rgba(232,100,10,0.09);border:1px solid rgba(232,100,10,0.16);border-radius:12px;">
+                <div class="ss-ui-h" style="width:60%;background:rgba(232,100,10,0.5)"></div>
+                <div class="ss-ui-s" style="width:80%"></div>
+              </div>
+              <div class="ss-ui-row">
+                <div class="ss-ui-card" style="background:rgba(232,100,10,0.07)"><div class="ss-ui-ico">📝</div><div class="ss-ui-s" style="width:70%"></div></div>
+                <div class="ss-ui-card" style="background:rgba(255,209,102,0.07)"><div class="ss-ui-ico">🏆</div><div class="ss-ui-s" style="width:70%"></div></div>
+                <div class="ss-ui-card" style="background:rgba(52,152,219,0.07)"><div class="ss-ui-ico">📖</div><div class="ss-ui-s" style="width:70%"></div></div>
+              </div>
+              <div class="ss-ui-list">
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:rgba(232,100,10,0.4);border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:50%"></div></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:rgba(52,152,219,0.4);border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:50%"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>🏠 Home</span>
+            <span class="ss-tag" style="color:#FFB26B;border-color:rgba(232,100,10,0.25);background:rgba(232,100,10,0.08)">Dashboard</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 — Mock Exam -->
+        <div class="ss-slide" onclick="openLightbox(1)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-2.png" alt="Mock Exam" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--orange)"></div><div class="ss-ui-line"></div><div style="width:36px;height:14px;border-radius:4px;background:rgba(232,100,10,0.3);font-size:.55rem;color:#FFB26B;display:flex;align-items:center;justify-content:center;font-weight:700;">44:12</div></div>
+              <div class="ss-ui-block" style="background:rgba(232,100,10,0.06);border:1px solid rgba(232,100,10,0.14);border-radius:10px;flex:1;">
+                <div class="ss-ui-h" style="width:30%;background:rgba(232,100,10,0.3)"></div>
+                <div class="ss-ui-s" style="width:100%"></div>
+                <div class="ss-ui-s" style="width:90%"></div>
+                <div class="ss-ui-s" style="width:75%"></div>
+                <div style="display:flex;flex-direction:column;gap:5px;margin-top:4px;">
+                  <div style="height:20px;background:rgba(232,100,10,0.15);border:1px solid rgba(232,100,10,0.25);border-radius:6px;"></div>
+                  <div style="height:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;"></div>
+                  <div style="height:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;"></div>
+                  <div style="height:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;"></div>
+                </div>
+              </div>
+              <div style="height:26px;background:var(--orange);border-radius:8px;opacity:.7;"></div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>📝 Mock Exam</span>
+            <span class="ss-tag" style="color:#FFB26B;border-color:rgba(232,100,10,0.25);background:rgba(232,100,10,0.08)">JAMB</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 3 — Past Questions -->
+        <div class="ss-slide" onclick="openLightbox(2)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-3.png" alt="Past Questions" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:#3498DB"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="padding:4px 0;">
+                <div class="ss-ui-h" style="width:55%;background:rgba(52,152,219,0.4)"></div>
+              </div>
+              <div class="ss-ui-list">
+                <div class="ss-ui-item" style="border-color:rgba(232,100,10,0.15);background:rgba(232,100,10,0.04)"><div class="ss-ui-av" style="background:rgba(232,100,10,0.4);border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(232,100,10,0.2)"></div></div>
+                <div class="ss-ui-item" style="border-color:rgba(52,152,219,0.15);background:rgba(52,152,219,0.04)"><div class="ss-ui-av" style="background:rgba(52,152,219,0.4);border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(52,152,219,0.2)"></div></div>
+                <div class="ss-ui-item" style="border-color:rgba(0,196,140,0.15);background:rgba(0,196,140,0.04)"><div class="ss-ui-av" style="background:rgba(0,196,140,0.4);border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(0,196,140,0.2)"></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:rgba(124,106,247,0.4);border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(124,106,247,0.2)"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>📖 Past Questions</span>
+            <span class="ss-tag" style="color:#3498DB;border-color:rgba(52,152,219,0.25);background:rgba(52,152,219,0.08)">Practice</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 4 — Quiz Tournament -->
+        <div class="ss-slide" onclick="openLightbox(3)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-4.png" alt="Quiz Tournament" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:#FFD166"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="background:rgba(255,209,102,0.07);border:1px solid rgba(255,209,102,0.15);border-radius:10px;">
+                <div style="font-size:1.2rem;text-align:center;margin-bottom:4px;">🏆</div>
+                <div class="ss-ui-h" style="width:60%;background:rgba(255,209,102,0.4);margin:0 auto"></div>
+                <div class="ss-ui-s" style="width:80%;margin:0 auto"></div>
+              </div>
+              <div class="ss-ui-list">
+                <div class="ss-ui-item" style="border-color:rgba(255,209,102,0.15)">
+                  <div style="width:16px;height:16px;border-radius:50%;background:rgba(255,215,0,0.6);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#000;">1</div>
+                  <div class="ss-ui-av" style="background:rgba(255,209,102,0.4)"></div>
+                  <div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div></div>
+                  <div style="width:32px;height:12px;border-radius:4px;background:rgba(255,209,102,0.2)"></div>
+                </div>
+                <div class="ss-ui-item" style="border-color:rgba(192,192,192,0.15)">
+                  <div style="width:16px;height:16px;border-radius:50%;background:rgba(192,192,192,0.4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff;">2</div>
+                  <div class="ss-ui-av" style="background:rgba(52,152,219,0.4)"></div>
+                  <div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div></div>
+                  <div style="width:32px;height:12px;border-radius:4px;background:rgba(192,192,192,0.1)"></div>
+                </div>
+                <div class="ss-ui-item">
+                  <div style="width:16px;height:16px;border-radius:50%;background:rgba(205,127,50,0.4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff;">3</div>
+                  <div class="ss-ui-av" style="background:rgba(232,100,10,0.4)"></div>
+                  <div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div></div>
+                  <div style="width:32px;height:12px;border-radius:4px;background:rgba(205,127,50,0.1)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>🏆 Tournament</span>
+            <span class="ss-tag" style="color:#FFB26B;border-color:rgba(255,209,102,0.3);background:rgba(255,209,102,0.08)">Compete</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 5 — Bookstore -->
+        <div class="ss-slide" onclick="openLightbox(4)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-5.png" alt="Digital Bookstore" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:#3498DB"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="padding:4px 0;">
+                <div class="ss-ui-h" style="width:50%;background:rgba(52,152,219,0.4)"></div>
+              </div>
+              <div class="ss-ui-row" style="flex-wrap:wrap;gap:6px;">
+                <div class="ss-ui-card" style="background:rgba(232,100,10,0.06);border-color:rgba(232,100,10,0.12);min-width:calc(50% - 3px);">
+                  <div style="height:36px;background:rgba(232,100,10,0.12);border-radius:6px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;">📗</div>
+                  <div class="ss-ui-s" style="width:90%"></div><div class="ss-ui-s" style="width:60%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(52,152,219,0.06);border-color:rgba(52,152,219,0.12);min-width:calc(50% - 3px);">
+                  <div style="height:36px;background:rgba(52,152,219,0.12);border-radius:6px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;">📘</div>
+                  <div class="ss-ui-s" style="width:90%"></div><div class="ss-ui-s" style="width:60%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(0,196,140,0.05);border-color:rgba(0,196,140,0.1);min-width:calc(50% - 3px);">
+                  <div style="height:36px;background:rgba(0,196,140,0.1);border-radius:6px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;">📙</div>
+                  <div class="ss-ui-s" style="width:90%"></div><div class="ss-ui-s" style="width:60%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(124,106,247,0.05);border-color:rgba(124,106,247,0.1);min-width:calc(50% - 3px);">
+                  <div style="height:36px;background:rgba(124,106,247,0.1);border-radius:6px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;">📕</div>
+                  <div class="ss-ui-s" style="width:90%"></div><div class="ss-ui-s" style="width:60%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>📚 Bookstore</span>
+            <span class="ss-tag" style="color:#3498DB;border-color:rgba(52,152,219,0.25);background:rgba(52,152,219,0.08)">Study</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 6 — Results / Score -->
+        <div class="ss-slide" onclick="openLightbox(5)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-6.png" alt="Exam Results" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--orange)"></div><div class="ss-ui-line"></div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;background:rgba(232,100,10,0.06);border:1px solid rgba(232,100,10,0.14);border-radius:12px;padding:16px;text-align:center;">
+                <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--orange),#FFB26B);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">✓</div>
+                <div class="ss-ui-h" style="width:40%;background:rgba(232,100,10,0.5);margin:0 auto"></div>
+                <div style="height:22px;width:55%;background:rgba(255,255,255,0.15);border-radius:6px;"></div>
+              </div>
+              <div class="ss-ui-row">
+                <div class="ss-ui-card" style="text-align:center;background:rgba(0,196,140,0.06);border-color:rgba(0,196,140,0.12)">
+                  <div class="ss-ui-h" style="width:50%;background:rgba(0,196,140,0.4);margin:0 auto 4px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+                <div class="ss-ui-card" style="text-align:center;background:rgba(231,76,60,0.06);border-color:rgba(231,76,60,0.12)">
+                  <div class="ss-ui-h" style="width:50%;background:rgba(231,76,60,0.4);margin:0 auto 4px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>📊 Results</span>
+            <span class="ss-tag" style="color:#FFB26B;border-color:rgba(232,100,10,0.25);background:rgba(232,100,10,0.08)">Score</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 7 — Subject Selection -->
+        <div class="ss-slide" onclick="openLightbox(6)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-7.png" alt="Subject Selection" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--orange)"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="padding:4px 0;">
+                <div class="ss-ui-h" style="width:55%;background:rgba(232,100,10,0.4)"></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;padding:9px 11px;background:rgba(232,100,10,0.08);border:1px solid rgba(232,100,10,0.18);border-radius:9px;">
+                  <div style="width:18px;height:18px;border-radius:4px;background:rgba(232,100,10,0.5);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.65rem;">✓</div>
+                  <div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:9px 11px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;">
+                  <div style="width:18px;height:18px;border-radius:4px;background:rgba(255,255,255,0.1);flex-shrink:0;"></div>
+                  <div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:9px 11px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;">
+                  <div style="width:18px;height:18px;border-radius:4px;background:rgba(255,255,255,0.1);flex-shrink:0;"></div>
+                  <div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:9px 11px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;">
+                  <div style="width:18px;height:18px;border-radius:4px;background:rgba(255,255,255,0.1);flex-shrink:0;"></div>
+                  <div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div></div>
+                </div>
+              </div>
+              <div style="height:26px;background:var(--orange);border-radius:8px;opacity:.75;margin-top:4px;"></div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>🎯 Subjects</span>
+            <span class="ss-tag" style="color:#FFB26B;border-color:rgba(232,100,10,0.25);background:rgba(232,100,10,0.08)">Select</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 8 — Profile / Progress -->
+        <div class="ss-slide" onclick="openLightbox(7)">
+          <div class="ss-frame">
+            <img src="mev-screenshot-8.png" alt="Student Profile" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--orange)"></div><div class="ss-ui-line"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--orange),#FFB26B);flex-shrink:0;"></div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:5px;">
+                  <div class="ss-ui-h" style="width:55%;background:rgba(255,255,255,0.2)"></div>
+                  <div class="ss-ui-s" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="ss-ui-row">
+                <div class="ss-ui-card" style="background:rgba(232,100,10,0.06);border-color:rgba(232,100,10,0.12);text-align:center">
+                  <div style="height:16px;width:36px;background:var(--orange);opacity:.4;border-radius:4px;margin:0 auto 5px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(255,209,102,0.06);border-color:rgba(255,209,102,0.12);text-align:center">
+                  <div style="height:16px;width:36px;background:#FFD166;opacity:.4;border-radius:4px;margin:0 auto 5px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(52,152,219,0.06);border-color:rgba(52,152,219,0.12);text-align:center">
+                  <div style="height:16px;width:36px;background:#3498DB;opacity:.4;border-radius:4px;margin:0 auto 5px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>👤 Profile</span>
+            <span class="ss-tag" style="color:#FFB26B;border-color:rgba(232,100,10,0.25);background:rgba(232,100,10,0.08)">Progress</span>
+          </div>
+        </div>
+
+      </div><!-- end track -->
+    </div>
+
+    <div class="ss-arrows">
+      <div class="ss-arrow" onclick="scrollSlides(-1)">←</div>
+      <div class="ss-arrow" onclick="scrollSlides(1)">→</div>
+    </div>
+    <div class="ss-dots" id="ssDots">
+      <div class="ss-dot active" onclick="goToSlide(0)"></div>
+      <div class="ss-dot" onclick="goToSlide(1)"></div>
+      <div class="ss-dot" onclick="goToSlide(2)"></div>
+      <div class="ss-dot" onclick="goToSlide(3)"></div>
+      <div class="ss-dot" onclick="goToSlide(4)"></div>
+      <div class="ss-dot" onclick="goToSlide(5)"></div>
+      <div class="ss-dot" onclick="goToSlide(6)"></div>
+      <div class="ss-dot" onclick="goToSlide(7)"></div>
+    </div>
+
+    <p style="text-align:center;color:rgba(255,255,255,0.25);font-size:.76rem;margin-top:20px;">
+      To add real screenshots: place <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;color:rgba(255,255,255,0.5)">mev-screenshot-1.png</code> … <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;color:rgba(255,255,255,0.5)">mev-screenshot-8.png</code> in the same folder as this HTML file.
+    </p>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="lbNav(-1,event)">←</button>
+  <img class="lightbox-img" id="lbImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="lbNav(1,event)">→</button>
+  <div class="lightbox-caption" id="lbCaption"></div>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrap" style="padding-top:70px;" id="download">
+  <div class="cta-box">
+    <div>
+      <h2>Stop reading passively.<br>Start practising to pass.</h2>
+      <p>JAMB, WAEC, NECO — every major exam, one app. Mock exams, past questions, and quiz tournaments to keep you sharp.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="#" class="btn-orange">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.33.19.7.24 1.07.14L15.84 12 4.25.1C3.88 0 3.51.05 3.18.24 2.49.63 2 1.42 2 2.37v19.26c0 .95.49 1.74 1.18 2.13zM17.4 13.56 6.95 24l9.02-5.21 1.43-5.23zM22.1 10.3c-.48-.28-1.12-.44-1.72-.12L18.7 11.3l1.6.7 1.68.97c.6.32 1.24.16 1.72-.12.72-.41 1.06-1.1 1.06-1.7 0-.58-.34-1.28-1.06-1.55zM6.95 0 17.4 10.44 15.97 5.21 6.95 0z"/></svg>
+        Download on Play Store
+      </a>
+      <a href="https://versecity-edutech-sector.web.app/" target="_blank" class="btn-ghost-white">Visit VerseCity ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-wrap">
+  <p>© 2026 Mock Exam Verse · A product of <a href="https://versecity-edutech-sector.web.app/" target="_blank">VerseCity Technology</a></p>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+    <a href="https://versecity-edutech-sector.web.app/" target="_blank">VerseCity ↗</a>
+  </div>
+</div>
+
+<script>
+  const slides = [
+    { src:'mev-screenshot-1.png', label:'🏠 Home Dashboard' },
+    { src:'mev-screenshot-2.png', label:'📝 Mock Exam — JAMB' },
+    { src:'mev-screenshot-3.png', label:'📖 Past Questions' },
+    { src:'mev-screenshot-4.png', label:'🏆 Quiz Tournament' },
+    { src:'mev-screenshot-5.png', label:'📚 Digital Bookstore' },
+    { src:'mev-screenshot-6.png', label:'📊 Exam Results' },
+    { src:'mev-screenshot-7.png', label:'🎯 Subject Selection' },
+    { src:'mev-screenshot-8.png', label:'👤 Student Profile' },
+  ];
+  let lbIndex = 0;
+
+  function scrollSlides(dir) {
+    const track = document.getElementById('ssTrack');
+    const cardW = track.children[0].offsetWidth + 16;
+    track.scrollBy({ left: dir * cardW * 2, behavior:'smooth' });
+  }
+  function goToSlide(i) {
+    const track = document.getElementById('ssTrack');
+    const cardW = track.children[0].offsetWidth + 16;
+    track.scrollTo({ left: i * cardW, behavior:'smooth' });
+  }
+  document.getElementById('ssTrack').addEventListener('scroll', function() {
+    const cardW = this.children[0].offsetWidth + 16;
+    const i = Math.round(this.scrollLeft / cardW);
+    document.querySelectorAll('.ss-dot').forEach((d,idx) => d.classList.toggle('active', idx===i));
+  });
+  function openLightbox(i) {
+    lbIndex = i;
+    document.getElementById('lbImg').src = slides[i].src;
+    document.getElementById('lbCaption').textContent = slides[i].label;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.currentTarget.classList.contains('lightbox-close')) return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function lbNav(dir, e) {
+    e && e.stopPropagation();
+    lbIndex = (lbIndex + dir + slides.length) % slides.length;
+    document.getElementById('lbImg').src = slides[lbIndex].src;
+    document.getElementById('lbCaption').textContent = slides[lbIndex].label;
+  }
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')});
+    if (e.key === 'ArrowRight') lbNav(1, null);
+    if (e.key === 'ArrowLeft') lbNav(-1, null);
+  });
+</script>
+</body>
+</html>

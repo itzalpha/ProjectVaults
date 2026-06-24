@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Recharge Cards NG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #333;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+        }
+
+        /* Apps Showcase */
+        .apps-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .app-highlight {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid;
+            transition: all 0.3s ease;
+        }
+
+        .app-highlight:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-highlight.main { border-left-color: #1a1a2e; }
+        .app-highlight.secondary { border-left-color: #dc3545; }
+        .app-highlight.tertiary { border-left-color: #20c997; }
+
+        .app-highlight h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .app-highlight p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            color: #555;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            text-align: center;
+            margin: 100px -20px;
+            padding: 80px 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Service Features */
+        .service-features {
+            background: #f8f9fa;
+            margin: 100px -20px;
+            padding: 100px 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            background: #e9ecef;
+            transform: translateY(-3px);
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .contact-card p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .apps-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img">LOGO</div>
+                Recharge Cards NG
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#apps">Our Apps</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>About Recharge Cards NG</h1>
+            <p>Professional mobile recharge voucher solutions for Nigeria</p>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="apps">
+        <h2>Our Mobile Applications</h2>
+        <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            We provide three specialized mobile recharge applications designed to serve different user needs and network preferences. Each application offers secure, reliable recharge voucher services with instant delivery and professional customer support.
+        </p>
+        
+        <div class="apps-showcase">
+            <div class="app-highlight main">
+                <h3>Recharge Cards NG (Main App)</h3>
+                <p>Our comprehensive application supporting all major Nigerian networks in one unified platform. Designed for users who need multi-network recharge capabilities.</p>
+                <ul class="feature-list">
+                    <li>All Networks Support (MTN, Airtel, Glo, 9Mobile)</li>
+                    <li>Unified User Interface</li>
+                    <li>Cross-Network Transaction Management</li>
+                    <li>Comprehensive Purchase History</li>
+                    <li>Professional Customer Support</li>
+                </ul>
+            </div>
+            
+            <div class="app-highlight secondary">
+                <h3>MTN & Airtel Recharge Vouchers</h3>
+                <p>Specialized platform exclusively for MTN and Airtel networks, optimized for high-volume users and business customers requiring these specific networks.</p>
+                <ul class="feature-list">
+                    <li>Instant Voucher Generation</li>
+                    <li>Multiple Payment Options</li>
+                    <li>Detailed Transaction History</li>
+                    <li>Business Hours Customer Support</li>
+                    <li>Bulk Purchase Options</li>
+                </ul>
+            </div>
+            
+            <div class="app-highlight tertiary">
+                <h3>Glo & 9Mobile Recharge Vouchers</h3>
+                <p>Dedicated solution for Glo and 9Mobile networks with specialized features tailored to these providers' unique requirements and customer base.</p>
+                <ul class="feature-list">
+                    <li>Quick Voucher Delivery</li>
+                    <li>Secure Payment Gateway</li>
+                    <li>Real-time Transaction Notifications</li>
+                    <li>Dedicated Customer Support</li>
+                    <li>Network-Specific Features</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats">
+        <h2 style="color: white; margin-bottom: 60px;">Service Excellence</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>Success Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3>10K+</h3>
+                <p>Satisfied Customers</p>
+            </div>
+            <div class="stat-item">
+                <h3>4</h3>
+                <p>Networks Supported</p>
+            </div>
+            <div class="stat-item">
+                <h3>5</h3>
+                <p>Days a Week Service</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Features Section -->
+    <div class="service-features">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="color: #333; margin-bottom: 60px;">Why Choose Our Services</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Transactions</h3>
+                    <p>All transactions are protected with industry-standard encryption and secure payment gateways to ensure your financial information is safe.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Delivery</h3>
+                    <p>Get your recharge vouchers instantly upon successful payment. Our automated system ensures quick and reliable delivery.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Professional Support</h3>
+                    <p>Our dedicated customer support team is available during business hours to assist with any questions or concerns.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Transaction History</h3>
+                    <p>Keep track of all your purchases with detailed transaction history and receipt management features.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Network Flexibility</h3>
+                    <p>Choose from our specialized apps or use our main app that supports all major Nigerian networks in one place.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Multiple Payment Options</h3>
+                    <p>Pay using various methods including bank transfers, card payments, and mobile money for maximum convenience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact" id="contact">
+        <div class="contact-container">
+            <h2 style="color: #333; margin-bottom: 40px;">Contact Information</h2>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+                Professional customer support for all your recharge voucher needs
+            </p>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>📧 Email Support</h3>
+                    <p>abuhamamah70@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <h3>📞 Phone Support</h3>
+                    <p>+234-816-348-3415</p>
+                </div>
+                <div class="contact-card">
+                    <h3>🕒 Business Hours</h3>
+                    <p>5 Days a Week<br>9:00 AM - 4:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="footer-logo-img">LOGO</div>
+                Recharge Cards NG
+            </div>
+            <p style="margin-bottom: 30px; opacity: 0.8; max-width: 600px;">
+                Your trusted partner for mobile recharge vouchers across Nigeria. Professional service, secure transactions, and reliable delivery.
+            </p>
+            <hr style="margin: 40px 0; opacity: 0.2;">
+            <p style="opacity: 0.6;">&copy; 2025 Recharge Cards NG. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.app-highlight, .feature-card, .contact-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                if (target >= 10000) {
+                    element.textContent = (current / 1000).toFixed(0) + 'K+';
+                } else if (target >= 100) {
+                    element.textContent = Math.floor(current * 10) / 10 + '%';
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.stat-item h3');
+                    const targets = [99.9, 10000, 4, 5];
+                    
+                    counters.forEach((counter, index) => {
+                        animateCounter(counter, targets[index]);
+                    });
+                    
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Verse — Your #1 Campus Companion</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  :root {
+    --green: #00C48C;
+    --bg: #F7F9F6;
+    --dark: #0D1310;
+    --card: #FFFFFF;
+    --muted: #7A8A82;
+    --border: #E4EBE7;
+    --accent: #D4F5E9;
+    --ps: https://play.google.com/store/apps/details?id=com.versecitytech.campusverse;
+  }
+  body {
+    background: var(--bg);
+    color: var(--dark);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--dark); color: rgba(255,255,255,0.55);
+    text-align:center; font-size:.78rem; padding:10px 20px; letter-spacing:.3px;
+  }
+  .topbar a { color:var(--green); text-decoration:none; font-weight:500; }
+  .topbar a:hover { text-decoration:underline; }
+
+  /* NAV */
+  nav {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 7%; border-bottom:1px solid var(--border);
+    background:var(--bg); position:sticky; top:0; z-index:50;
+  }
+  .logo {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem;
+    color:var(--dark); letter-spacing:-.5px;
+    display:flex; align-items:center; gap:8px; text-decoration:none;
+  }
+  .logo-mark {
+    width:28px; height:28px; background:var(--green);
+    border-radius:8px; display:flex; align-items:center; justify-content:center;
+  }
+  .logo-mark svg { width:15px; height:15px; }
+  .nav-right { display:flex; align-items:center; gap:18px; }
+  .versecity-link {
+    font-size:.82rem; color:var(--muted); text-decoration:none;
+    font-weight:500; transition:color .2s;
+  }
+  .versecity-link:hover { color:var(--dark); }
+  .nav-cta {
+    background:var(--dark); color:#fff;
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:.82rem; padding:10px 20px; border-radius:50px;
+    text-decoration:none; transition:background .2s;
+  }
+  .nav-cta:hover { background:#1c2820; }
+
+  /* HERO */
+  .hero {
+    padding:80px 7% 70px; max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  .eco-pill {
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--accent); border:1px solid rgba(0,196,140,0.2);
+    border-radius:50px; padding:5px 14px 5px 7px;
+    font-size:.74rem; color:#1a6b50; font-weight:500;
+    margin-bottom:22px; text-decoration:none; transition:background .2s;
+  }
+  .eco-pill:hover { background:#bfedda; }
+  .eco-pill-badge {
+    width:18px; height:18px; background:var(--green); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.58rem; color:#fff; font-weight:800;
+  }
+  h1 {
+    font-family:'Syne',sans-serif; font-size:clamp(2.4rem,4vw,3.5rem);
+    font-weight:800; line-height:1.07; letter-spacing:-1.5px;
+    color:var(--dark); margin-bottom:18px;
+  }
+  h1 .hl { color:var(--green); }
+  .hero-desc {
+    font-size:.98rem; color:var(--muted); line-height:1.78;
+    margin-bottom:32px; max-width:400px;
+  }
+  .hero-btns { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .btn-dark {
+    background:var(--dark); color:#fff;
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:.86rem; padding:13px 24px; border-radius:50px;
+    text-decoration:none; display:flex; align-items:center; gap:7px; transition:all .2s;
+  }
+  .btn-dark:hover { background:#1c2820; transform:translateY(-1px); }
+  .btn-ghost { color:var(--muted); font-size:.86rem; font-weight:500; text-decoration:none; transition:color .2s; }
+  .btn-ghost:hover { color:var(--dark); }
+  .hero-stats {
+    display:flex; gap:28px; margin-top:36px;
+    padding-top:28px; border-top:1px solid var(--border);
+  }
+  .stat strong {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:1.45rem; letter-spacing:-1px; color:var(--dark); display:block;
+  }
+  .stat strong span { color:var(--green); }
+  .stat small { font-size:.76rem; color:var(--muted); }
+
+  /* APP CARD */
+  .hero-right { position:relative; }
+  .float-pill {
+    position:absolute; background:#fff; border-radius:50px;
+    padding:7px 14px; box-shadow:0 6px 24px rgba(0,0,0,0.09);
+    font-size:.73rem; font-weight:600; display:flex; align-items:center;
+    gap:6px; white-space:nowrap; z-index:2;
+  }
+  .fp-top { top:-14px; right:16px; }
+  .fp-bot { bottom:-12px; left:16px; color:var(--muted); }
+  .fp-dot { width:7px; height:7px; border-radius:50%; background:var(--green); flex-shrink:0; }
+  .fp-dot.y { background:#FFD166; }
+  .app-card {
+    background:var(--dark); border-radius:22px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(13,19,16,0.16);
+  }
+  .ac-bar {
+    padding:14px 18px; border-bottom:1px solid rgba(255,255,255,0.06);
+    display:flex; align-items:center; gap:7px;
+  }
+  .acd { width:7px; height:7px; border-radius:50%; }
+  .ac-bar-url { flex:1; height:14px; background:rgba(255,255,255,0.05); border-radius:5px; margin:0 8px; }
+  .ac-body { padding:18px; display:flex; flex-direction:column; gap:11px; }
+  .ac-welcome {
+    background:rgba(0,196,140,0.09); border:1px solid rgba(0,196,140,0.16);
+    border-radius:12px; padding:16px;
+  }
+  .ac-wt { font-family:'Syne',sans-serif; font-weight:700; font-size:.88rem; color:#fff; margin-bottom:3px; }
+  .ac-ws { font-size:.7rem; color:rgba(255,255,255,0.38); }
+  .ac-tiles { display:flex; gap:9px; }
+  .ac-tile {
+    flex:1; border-radius:10px; padding:12px 10px;
+    border:1px solid rgba(255,255,255,0.05);
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .ac-tile-ico { font-size:1rem; }
+  .ac-tile-lbl { font-size:.65rem; color:rgba(255,255,255,0.4); font-weight:500; }
+  .ac-tile-val { font-family:'Syne',sans-serif; font-size:.78rem; color:#fff; font-weight:700; }
+  .ac-rows { display:flex; flex-direction:column; gap:6px; }
+  .ac-row-item {
+    display:flex; align-items:center; gap:9px;
+    background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+    border-radius:9px; padding:9px 11px;
+  }
+  .ac-ri-ico {
+    width:28px; height:28px; border-radius:7px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.8rem; flex-shrink:0;
+  }
+  .ac-ri-body { flex:1; }
+  .ac-ri-t { font-size:.73rem; color:rgba(255,255,255,0.8); font-weight:500; }
+  .ac-ri-s { font-size:.64rem; color:rgba(255,255,255,0.28); }
+  .ac-badge { font-size:.62rem; padding:2px 8px; border-radius:20px; font-weight:600; flex-shrink:0; }
+
+  /* FEATURES */
+  .features { padding:70px 7%; max-width:1080px; margin:0 auto; }
+  .sec-label {
+    text-align:center; font-size:.73rem; font-weight:700;
+    letter-spacing:2.5px; text-transform:uppercase; color:var(--green); margin-bottom:10px;
+  }
+  .sec-title {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:clamp(1.65rem,2.8vw,2.2rem); letter-spacing:-1px;
+    text-align:center; color:var(--dark); margin-bottom:44px;
+  }
+  .feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .feat-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:26px 22px; transition:all .22s;
+  }
+  .feat-card:hover {
+    border-color:rgba(0,196,140,0.28);
+    box-shadow:0 6px 24px rgba(0,196,140,0.06);
+    transform:translateY(-3px);
+  }
+  .feat-card .ico { font-size:1.4rem; margin-bottom:13px; display:block; }
+  .feat-card h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:.9rem; color:var(--dark); margin-bottom:7px; }
+  .feat-card p { font-size:.82rem; color:var(--muted); line-height:1.65; }
+
+  /* ── SCREENSHOTS ── */
+  .screenshots {
+    background: var(--dark);
+    padding: 80px 7%;
+  }
+  .screenshots .inner { max-width:1080px; margin:0 auto; }
+  .screenshots .sec-label { color:var(--green); }
+  .screenshots .sec-title { color:#fff; margin-bottom:16px; }
+  .ss-sub {
+    text-align:center; color:rgba(255,255,255,0.4);
+    font-size:.88rem; margin-bottom:52px; line-height:1.6;
+  }
+
+  /* Scrollable track */
+  .ss-track-wrap {
+    position:relative;
+  }
+  .ss-track {
+    display:flex; gap:16px;
+    overflow-x:auto; scroll-snap-type:x mandatory;
+    padding-bottom:12px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .ss-track::-webkit-scrollbar { display:none; }
+
+  .ss-slide {
+    flex:0 0 260px; scroll-snap-align:start;
+    border-radius:18px; overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+    background:#111820;
+    transition:all .3s;
+    cursor:pointer;
+    position:relative;
+  }
+  .ss-slide:hover {
+    border-color:rgba(0,196,140,0.35);
+    transform:translateY(-5px);
+    box-shadow:0 16px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Phone frame */
+  .ss-frame {
+    width:100%; aspect-ratio:9/18;
+    position:relative; overflow:hidden;
+    background:#0a0f1a;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* Real screenshot fills frame */
+  .ss-frame img {
+    width:100%; height:100%; object-fit:cover;
+    display:block;
+  }
+
+  /* Placeholder shown when no real screenshot */
+  .ss-placeholder {
+    width:100%; height:100%;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:12px; padding:24px; text-align:center;
+  }
+  .ss-placeholder-icon { font-size:2rem; opacity:.5; }
+  .ss-placeholder-text { font-size:.72rem; color:rgba(255,255,255,0.25); line-height:1.5; }
+  .ss-placeholder-label {
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:.78rem; color:rgba(255,255,255,0.5);
+  }
+
+  /* Decorative UI overlay on placeholders */
+  .ss-ui { width:100%; height:100%; padding:14px; display:flex; flex-direction:column; gap:8px; }
+  .ss-ui-bar {
+    display:flex; align-items:center; gap:6px;
+    padding:8px 10px; border-radius:8px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  .ss-ui-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .ss-ui-line { height:5px; border-radius:3px; flex:1; background:rgba(255,255,255,0.08); }
+  .ss-ui-block {
+    border-radius:10px; padding:12px;
+    display:flex; flex-direction:column; gap:7px;
+  }
+  .ss-ui-h { height:9px; border-radius:3px; background:rgba(255,255,255,0.15); }
+  .ss-ui-s { height:6px; border-radius:3px; background:rgba(255,255,255,0.07); }
+  .ss-ui-row { display:flex; gap:6px; }
+  .ss-ui-card {
+    flex:1; border-radius:8px; padding:10px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.05);
+    display:flex; flex-direction:column; gap:5px;
+  }
+  .ss-ui-ico { font-size:.9rem; margin-bottom:2px; }
+  .ss-ui-list { display:flex; flex-direction:column; gap:5px; }
+  .ss-ui-item {
+    display:flex; align-items:center; gap:7px;
+    background:rgba(255,255,255,0.03); border-radius:7px; padding:7px 8px;
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  .ss-ui-av { width:22px; height:22px; border-radius:50%; flex-shrink:0; }
+  .ss-ui-tl { flex:1; display:flex; flex-direction:column; gap:3px; }
+  .ss-ui-lx { height:5px; border-radius:2px; background:rgba(255,255,255,0.12); }
+
+  .ss-caption {
+    padding:12px 16px;
+    border-top:1px solid rgba(255,255,255,0.06);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .ss-caption span {
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:.76rem; color:rgba(255,255,255,0.7);
+  }
+  .ss-tag {
+    font-size:.64rem; padding:2px 9px; border-radius:20px;
+    font-weight:600; border:1px solid;
+  }
+
+  /* Scroll arrows */
+  .ss-arrows {
+    display:flex; justify-content:center; gap:10px; margin-top:28px;
+  }
+  .ss-arrow {
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .2s; color:rgba(255,255,255,0.6);
+    font-size:.9rem; user-select:none;
+  }
+  .ss-arrow:hover { background:rgba(0,196,140,0.15); border-color:rgba(0,196,140,0.3); color:#fff; }
+
+  /* Dots */
+  .ss-dots {
+    display:flex; justify-content:center; gap:6px; margin-top:20px;
+  }
+  .ss-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(255,255,255,0.2); transition:all .3s; cursor:pointer;
+  }
+  .ss-dot.active { width:20px; border-radius:4px; background:var(--green); }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position:fixed; inset:0; z-index:200;
+    background:rgba(0,0,0,0.88);
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+    backdrop-filter:blur(8px);
+  }
+  .lightbox.open { display:flex; }
+  .lightbox-img {
+    max-height:90vh; max-width:90vw;
+    border-radius:18px; object-fit:contain;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position:absolute; top:20px; right:24px;
+    color:rgba(255,255,255,0.7); font-size:1.6rem;
+    cursor:pointer; transition:color .2s; line-height:1;
+    background:none; border:none; font-weight:300;
+  }
+  .lightbox-close:hover { color:#fff; }
+  .lightbox-nav {
+    position:absolute; top:50%; transform:translateY(-50%);
+    background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15);
+    color:#fff; width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .2s; font-size:1rem;
+  }
+  .lightbox-nav:hover { background:rgba(0,196,140,0.2); border-color:rgba(0,196,140,0.4); }
+  .lightbox-prev { left:16px; }
+  .lightbox-next { right:16px; }
+  .lightbox-caption {
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    background:rgba(0,0,0,0.6); color:rgba(255,255,255,0.8);
+    padding:8px 20px; border-radius:50px; font-size:.8rem;
+    font-family:'Syne',sans-serif; font-weight:600; white-space:nowrap;
+  }
+
+  /* CTA */
+  .cta-wrap { padding:0 7% 70px; max-width:1080px; margin:0 auto; }
+  .cta-box {
+    background:var(--dark); border-radius:22px; padding:52px 56px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:36px; flex-wrap:wrap; position:relative; overflow:hidden;
+  }
+  .cta-box::before {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width:260px; height:260px;
+    background:radial-gradient(circle,rgba(0,196,140,0.11) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .cta-box h2 {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:clamp(1.5rem,2.2vw,1.9rem); letter-spacing:-1px;
+    color:#fff; margin-bottom:8px;
+  }
+  .cta-box p { color:rgba(255,255,255,0.42); font-size:.88rem; max-width:360px; line-height:1.7; }
+  .cta-btns { display:flex; gap:11px; flex-wrap:wrap; flex-shrink:0; }
+  .btn-green {
+    background:var(--green); color:#000;
+    font-family:'Syne',sans-serif; font-weight:700; font-size:.86rem;
+    padding:12px 24px; border-radius:50px; text-decoration:none;
+    display:flex; align-items:center; gap:7px; transition:all .2s; white-space:nowrap;
+  }
+  .btn-green:hover { background:#00dfa0; transform:translateY(-1px); }
+  .btn-ghost-white {
+    border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.6);
+    font-family:'Syne',sans-serif; font-weight:600; font-size:.83rem;
+    padding:12px 20px; border-radius:50px; text-decoration:none;
+    transition:all .2s; white-space:nowrap;
+  }
+  .btn-ghost-white:hover { border-color:rgba(255,255,255,0.32); color:#fff; }
+
+  /* FOOTER */
+  .footer-wrap {
+    border-top:1px solid var(--border); padding:24px 7%;
+    max-width:1080px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:14px;
+  }
+  .footer-wrap p { font-size:.78rem; color:var(--muted); }
+  .footer-wrap p a { color:var(--dark); font-weight:600; text-decoration:none; }
+  .footer-wrap p a:hover { color:var(--green); }
+  .footer-links { display:flex; gap:18px; }
+  .footer-links a { font-size:.76rem; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .footer-links a:hover { color:var(--dark); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  .hero-left > * { animation:fadeUp .6s ease both; }
+  .hero-left > *:nth-child(1){animation-delay:.04s}
+  .hero-left > *:nth-child(2){animation-delay:.12s}
+  .hero-left > *:nth-child(3){animation-delay:.2s}
+  .hero-left > *:nth-child(4){animation-delay:.28s}
+  .hero-left > *:nth-child(5){animation-delay:.36s}
+  .hero-right{animation:fadeUp .7s .18s ease both}
+
+  /* RESPONSIVE */
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;padding:56px 6% 48px;gap:40px}
+    .hero-right{display:none}
+    .feat-grid{grid-template-columns:1fr 1fr}
+    .cta-box{padding:36px 28px}
+    nav{padding:16px 5%}
+    .ss-slide{flex:0 0 200px}
+  }
+  @media(max-width:540px){
+    .feat-grid{grid-template-columns:1fr}
+    h1{font-size:2.1rem}
+    .cta-box{flex-direction:column}
+    .footer-wrap{flex-direction:column;align-items:flex-start}
+    .ss-slide{flex:0 0 160px}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  Part of the <a href="https://versecity-edutech-sector.web.app/" target="_blank">VerseCity Technology Ecosystem</a> — building products for African students &amp; communities.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h6" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    Campus Verse
+  </a>
+  <div class="nav-right">
+    <a href="https://versecity-edutech-sector.web.app/" target="_blank" class="versecity-link">VerseCity ↗</a>
+    <a href="https://play.google.com/store/apps/details?id=com.versecitytech.campusverse" target="_blank" class="nav-cta">Download App</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <a href="https://versecity-edutech-sector.web.app/" target="_blank" class="eco-pill">
+      <div class="eco-pill-badge">VC</div>
+      A VerseCity Technology Product
+    </a>
+    <h1>Your <span class="hl">Number One</span><br>Campus Companion</h1>
+    <p class="hero-desc">Every student has two problems — passing exams and making money. Campus Verse solves both, with a free materials library and a campus marketplace built for you.</p>
+    <div class="hero-btns">
+      <a href="https://play.google.com/store/apps/details?id=com.versecitytech.campusverse" target="_blank" class="btn-dark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.33.19.7.24 1.07.14L15.84 12 4.25.1C3.88 0 3.51.05 3.18.24 2.49.63 2 1.42 2 2.37v19.26c0 .95.49 1.74 1.18 2.13zM17.4 13.56 6.95 24l9.02-5.21 1.43-5.23zM22.1 10.3c-.48-.28-1.12-.44-1.72-.12L18.7 11.3l1.6.7 1.68.97c.6.32 1.24.16 1.72-.12.72-.41 1.06-1.1 1.06-1.7 0-.58-.34-1.28-1.06-1.55zM6.95 0 17.4 10.44 15.97 5.21 6.95 0z"/></svg>
+        Get on Play Store
+      </a>
+      <a href="#features" class="btn-ghost">See features →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>1,200<span>+</span></strong><small>Total Users</small></div>
+      <div class="stat"><strong>300<span>+</span></strong><small>Active Students</small></div>
+      <div class="stat"><strong>Free<span>.</span></strong><small>Library Access</small></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="float-pill fp-top"><div class="fp-dot"></div> New materials uploaded</div>
+    <div class="app-card">
+      <div class="ac-bar">
+        <div class="acd" style="background:#FF5F57"></div>
+        <div class="acd" style="background:#FEBC2E"></div>
+        <div class="acd" style="background:#28C840"></div>
+        <div class="ac-bar-url"></div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-welcome">
+          <div class="ac-wt">👋 Welcome back, Student</div>
+          <div class="ac-ws">You have 3 new materials in your courses</div>
+        </div>
+        <div class="ac-tiles">
+          <div class="ac-tile" style="background:rgba(0,196,140,0.07)">
+            <div class="ac-tile-ico">📚</div><div class="ac-tile-lbl">Library</div><div class="ac-tile-val">Free Access</div>
+          </div>
+          <div class="ac-tile" style="background:rgba(255,209,102,0.07)">
+            <div class="ac-tile-ico">📌</div><div class="ac-tile-lbl">Notice Board</div><div class="ac-tile-val">Advertise</div>
+          </div>
+          <div class="ac-tile" style="background:rgba(124,106,247,0.07)">
+            <div class="ac-tile-ico">🎓</div><div class="ac-tile-lbl">Tutorials</div><div class="ac-tile-val">Learn Skills</div>
+          </div>
+        </div>
+        <div class="ac-rows">
+          <div class="ac-row-item">
+            <div class="ac-ri-ico" style="background:rgba(231,76,60,0.15)">📄</div>
+            <div class="ac-ri-body"><div class="ac-ri-t">EEEn 202 — Past Questions 2022</div><div class="ac-ri-s">Uploaded by a 400L student</div></div>
+            <div class="ac-badge" style="background:rgba(0,196,140,0.12);color:#00C48C">Free</div>
+          </div>
+          <div class="ac-row-item">
+            <div class="ac-ri-ico" style="background:rgba(52,152,219,0.15)">📘</div>
+            <div class="ac-ri-body"><div class="ac-ri-t">MTH 201 — Lecturer's Textbook</div><div class="ac-ri-s">Mathematics Department</div></div>
+            <div class="ac-badge" style="background:rgba(0,196,140,0.12);color:#00C48C">Free</div>
+          </div>
+          <div class="ac-row-item">
+            <div class="ac-ri-ico" style="background:rgba(255,209,102,0.15)">📌</div>
+            <div class="ac-ri-body"><div class="ac-ri-t">Laptop for sale — ₦85,000</div><div class="ac-ri-s">Notice Board · 2h ago</div></div>
+            <div class="ac-badge" style="background:rgba(255,209,102,0.12);color:#a07800">Market</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="float-pill fp-bot"><div class="fp-dot y"></div> 300+ students active today</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features" id="features">
+  <div class="sec-label">What We Offer</div>
+  <h2 class="sec-title">Everything a student needs, in one app.</h2>
+  <div class="feat-grid">
+    <div class="feat-card"><span class="ico">📚</span><h3>Free Materials Library</h3><p>Past questions, textbooks, and lecture materials uploaded by students — for students. Free, across all universities.</p></div>
+    <div class="feat-card"><span class="ico">📌</span><h3>Campus Notice Board</h3><p>Advertise your products or services to your campus community at affordable rates. The student marketplace, sorted.</p></div>
+    <div class="feat-card"><span class="ico">🎓</span><h3>Skill Tutorials</h3><p>Learn from vetted professionals. Every tutorial is reviewed so you get real value for your money.</p></div>
+    <div class="feat-card"><span class="ico">📝</span><h3>Past Questions Bank</h3><p>The resource that can define your entire result — now available to every student, not just the lucky ones.</p></div>
+    <div class="feat-card"><span class="ico">🤝</span><h3>Student Community</h3><p>Connect, collaborate, and grow with students across campuses. Built to push everyone forward.</p></div>
+    <div class="feat-card"><span class="ico">🌍</span><h3>Cross-University Access</h3><p>Not limited to one school. Share and access materials from any university — the more students contribute, the better.</p></div>
+  </div>
+</div>
+
+<!-- SCREENSHOTS -->
+<div class="screenshots" id="screenshots">
+  <div class="inner">
+    <div class="sec-label" style="text-align:center">The App</div>
+    <h2 class="sec-title" style="color:#fff">See Campus Verse in action.</h2>
+    <p class="ss-sub">A look inside the app — from the materials library to the campus notice board.<br>Tap any screen to view it full size.</p>
+
+    <div class="ss-track-wrap">
+      <div class="ss-track" id="ssTrack">
+
+        <!-- SLIDE 1 -->
+        <div class="ss-slide" onclick="openLightbox(0)">
+          <div class="ss-frame">
+            <img src="screenshot-1.png" alt="Campus Verse Home Screen" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--green)"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="background:rgba(0,196,140,0.08);border:1px solid rgba(0,196,140,0.15);border-radius:10px;">
+                <div class="ss-ui-h" style="width:65%;background:rgba(0,196,140,0.4)"></div>
+                <div class="ss-ui-s" style="width:80%"></div>
+              </div>
+              <div class="ss-ui-row">
+                <div class="ss-ui-card"><div class="ss-ui-ico">📚</div><div class="ss-ui-s w60" style="width:60%"></div></div>
+                <div class="ss-ui-card"><div class="ss-ui-ico">📌</div><div class="ss-ui-s w60" style="width:60%"></div></div>
+                <div class="ss-ui-card"><div class="ss-ui-ico">🎓</div><div class="ss-ui-s w60" style="width:60%"></div></div>
+              </div>
+              <div class="ss-ui-list">
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#e74c3c;opacity:.5;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#3498db;opacity:.5;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>🏠 Home</span>
+            <span class="ss-tag" style="color:var(--green);border-color:rgba(0,196,140,0.25);background:rgba(0,196,140,0.08)">Dashboard</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="ss-slide" onclick="openLightbox(1)">
+          <div class="ss-frame">
+            <img src="screenshot-2.png" alt="Materials Library" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--green)"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="background:rgba(0,0,0,0.2);border-radius:10px;">
+                <div class="ss-ui-h" style="width:50%;background:rgba(0,196,140,0.4)"></div>
+              </div>
+              <div class="ss-ui-list">
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#e74c3c;opacity:.6;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:75%"></div><div class="ss-ui-lx" style="width:50%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(0,196,140,0.2);flex-shrink:0"></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#3498db;opacity:.6;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:75%"></div><div class="ss-ui-lx" style="width:50%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(0,196,140,0.2);flex-shrink:0"></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:var(--green);opacity:.5;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:75%"></div><div class="ss-ui-lx" style="width:50%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(0,196,140,0.2);flex-shrink:0"></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#9b59b6;opacity:.5;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:75%"></div><div class="ss-ui-lx" style="width:50%"></div></div><div style="width:28px;height:12px;border-radius:4px;background:rgba(0,196,140,0.2);flex-shrink:0"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>📚 Library</span>
+            <span class="ss-tag" style="color:var(--green);border-color:rgba(0,196,140,0.25);background:rgba(0,196,140,0.08)">Materials</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="ss-slide" onclick="openLightbox(2)">
+          <div class="ss-frame">
+            <img src="screenshot-3.png" alt="Past Questions" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:#7c6af7"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-block" style="background:rgba(124,106,247,0.08);border:1px solid rgba(124,106,247,0.15);border-radius:10px;">
+                <div class="ss-ui-h" style="width:70%;background:rgba(124,106,247,0.4)"></div>
+                <div class="ss-ui-s" style="width:55%"></div>
+              </div>
+              <div class="ss-ui-list">
+                <div class="ss-ui-item" style="border-color:rgba(124,106,247,0.15)"><div class="ss-ui-av" style="background:#7c6af7;opacity:.5;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div></div>
+                <div class="ss-ui-item" style="border-color:rgba(124,106,247,0.15)"><div class="ss-ui-av" style="background:#7c6af7;opacity:.4;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div></div>
+                <div class="ss-ui-item" style="border-color:rgba(124,106,247,0.15)"><div class="ss-ui-av" style="background:#7c6af7;opacity:.3;border-radius:6px"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:45%"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>📝 Past Questions</span>
+            <span class="ss-tag" style="color:#7c6af7;border-color:rgba(124,106,247,0.25);background:rgba(124,106,247,0.08)">Exam Prep</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="ss-slide" onclick="openLightbox(3)">
+          <div class="ss-frame">
+            <img src="screenshot-4.png" alt="Notice Board" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:#FFD166"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-row" style="flex-wrap:wrap;gap:6px">
+                <div class="ss-ui-card" style="background:rgba(255,209,102,0.07);border-color:rgba(255,209,102,0.15);min-width:calc(50% - 3px)">
+                  <div style="width:100%;height:28px;background:rgba(255,209,102,0.1);border-radius:6px;margin-bottom:6px"></div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(231,76,60,0.06);border-color:rgba(231,76,60,0.12);min-width:calc(50% - 3px)">
+                  <div style="width:100%;height:28px;background:rgba(231,76,60,0.1);border-radius:6px;margin-bottom:6px"></div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(0,196,140,0.05);border-color:rgba(0,196,140,0.12);min-width:calc(50% - 3px)">
+                  <div style="width:100%;height:28px;background:rgba(0,196,140,0.1);border-radius:6px;margin-bottom:6px"></div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(52,152,219,0.05);border-color:rgba(52,152,219,0.12);min-width:calc(50% - 3px)">
+                  <div style="width:100%;height:28px;background:rgba(52,152,219,0.1);border-radius:6px;margin-bottom:6px"></div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>📌 Notice Board</span>
+            <span class="ss-tag" style="color:#a07800;border-color:rgba(255,209,102,0.3);background:rgba(255,209,102,0.08)">Market</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="ss-slide" onclick="openLightbox(4)">
+          <div class="ss-frame">
+            <img src="screenshot-5.png" alt="Upload Screen" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--green)"></div><div class="ss-ui-line"></div></div>
+              <div style="border:2px dashed rgba(0,196,140,0.25);border-radius:12px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;justify-content:center;">
+                <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,196,140,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem">⬆️</div>
+                <div class="ss-ui-s" style="width:70%;background:rgba(0,196,140,0.25)"></div>
+                <div class="ss-ui-s" style="width:50%"></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="height:24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:7px"></div>
+                <div style="height:24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:7px"></div>
+                <div style="height:28px;background:var(--green);border-radius:7px;opacity:.7"></div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>⬆️ Upload</span>
+            <span class="ss-tag" style="color:var(--green);border-color:rgba(0,196,140,0.25);background:rgba(0,196,140,0.08)">Contribute</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="ss-slide" onclick="openLightbox(5)">
+          <div class="ss-frame">
+            <img src="screenshot-6.png" alt="Skill Tutorials" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:#7c6af7"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-row">
+                <div class="ss-ui-card" style="background:rgba(124,106,247,0.07);border-color:rgba(124,106,247,0.12)">
+                  <div style="height:32px;background:rgba(124,106,247,0.15);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.8rem;margin-bottom:6px">💻</div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(0,196,140,0.05);border-color:rgba(0,196,140,0.1)">
+                  <div style="height:32px;background:rgba(0,196,140,0.12);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.8rem;margin-bottom:6px">📊</div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+              </div>
+              <div class="ss-ui-row">
+                <div class="ss-ui-card" style="background:rgba(255,209,102,0.05);border-color:rgba(255,209,102,0.1)">
+                  <div style="height:32px;background:rgba(255,209,102,0.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.8rem;margin-bottom:6px">🎨</div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(231,76,60,0.05);border-color:rgba(231,76,60,0.1)">
+                  <div style="height:32px;background:rgba(231,76,60,0.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.8rem;margin-bottom:6px">📱</div>
+                  <div class="ss-ui-s" style="width:80%"></div><div class="ss-ui-s" style="width:55%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>🎓 Tutorials</span>
+            <span class="ss-tag" style="color:#7c6af7;border-color:rgba(124,106,247,0.25);background:rgba(124,106,247,0.08)">Skills</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="ss-slide" onclick="openLightbox(6)">
+          <div class="ss-frame">
+            <img src="screenshot-7.png" alt="Community" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:#3498db"></div><div class="ss-ui-line"></div></div>
+              <div class="ss-ui-list">
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:var(--green);opacity:.5"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:70%"></div><div class="ss-ui-lx" style="width:90%;background:rgba(255,255,255,0.07)"></div></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#FFD166;opacity:.5"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:65%"></div><div class="ss-ui-lx" style="width:85%;background:rgba(255,255,255,0.07)"></div></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#7c6af7;opacity:.5"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:60%"></div><div class="ss-ui-lx" style="width:80%;background:rgba(255,255,255,0.07)"></div></div></div>
+                <div class="ss-ui-item"><div class="ss-ui-av" style="background:#e74c3c;opacity:.5"></div><div class="ss-ui-tl"><div class="ss-ui-lx" style="width:55%"></div><div class="ss-ui-lx" style="width:75%;background:rgba(255,255,255,0.07)"></div></div></div>
+              </div>
+              <div style="height:28px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;display:flex;align-items:center;padding:0 10px;gap:6px">
+                <div class="ss-ui-s" style="flex:1"></div>
+                <div style="width:20px;height:14px;border-radius:4px;background:rgba(0,196,140,0.25)"></div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>🤝 Community</span>
+            <span class="ss-tag" style="color:#3498db;border-color:rgba(52,152,219,0.25);background:rgba(52,152,219,0.08)">Connect</span>
+          </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="ss-slide" onclick="openLightbox(7)">
+          <div class="ss-frame">
+            <img src="screenshot-8.png" alt="Student Profile" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="ss-placeholder ss-ui" style="display:none">
+              <div class="ss-ui-bar"><div class="ss-ui-dot" style="background:var(--green)"></div><div class="ss-ui-line"></div></div>
+              <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--green),#7c6af7);flex-shrink:0"></div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+                  <div class="ss-ui-h" style="width:55%;background:rgba(255,255,255,0.2)"></div>
+                  <div class="ss-ui-s" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="ss-ui-row">
+                <div class="ss-ui-card" style="background:rgba(0,196,140,0.06);border-color:rgba(0,196,140,0.12);text-align:center">
+                  <div style="height:16px;width:36px;background:var(--green);opacity:.4;border-radius:4px;margin:0 auto 5px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(255,209,102,0.06);border-color:rgba(255,209,102,0.12);text-align:center">
+                  <div style="height:16px;width:36px;background:#FFD166;opacity:.4;border-radius:4px;margin:0 auto 5px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+                <div class="ss-ui-card" style="background:rgba(124,106,247,0.06);border-color:rgba(124,106,247,0.12);text-align:center">
+                  <div style="height:16px;width:36px;background:#7c6af7;opacity:.4;border-radius:4px;margin:0 auto 5px"></div>
+                  <div class="ss-ui-s" style="width:70%;margin:0 auto"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ss-caption">
+            <span>👤 Profile</span>
+            <span class="ss-tag" style="color:var(--green);border-color:rgba(0,196,140,0.25);background:rgba(0,196,140,0.08)">Account</span>
+          </div>
+        </div>
+
+      </div><!-- end track -->
+    </div>
+
+    <div class="ss-arrows">
+      <div class="ss-arrow" onclick="scrollSlides(-1)">←</div>
+      <div class="ss-arrow" onclick="scrollSlides(1)">→</div>
+    </div>
+    <div class="ss-dots" id="ssDots">
+      <div class="ss-dot active" onclick="goToSlide(0)"></div>
+      <div class="ss-dot" onclick="goToSlide(1)"></div>
+      <div class="ss-dot" onclick="goToSlide(2)"></div>
+      <div class="ss-dot" onclick="goToSlide(3)"></div>
+      <div class="ss-dot" onclick="goToSlide(4)"></div>
+      <div class="ss-dot" onclick="goToSlide(5)"></div>
+      <div class="ss-dot" onclick="goToSlide(6)"></div>
+      <div class="ss-dot" onclick="goToSlide(7)"></div>
+    </div>
+
+    <p style="text-align:center;color:rgba(255,255,255,0.25);font-size:.76rem;margin-top:20px;">
+      To add real screenshots: replace <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;color:rgba(255,255,255,0.5)">screenshot-1.png</code> … <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;color:rgba(255,255,255,0.5)">screenshot-8.png</code> in the same folder as this HTML file.
+    </p>
+
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="lbNav(-1,event)">←</button>
+  <img class="lightbox-img" id="lbImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="lbNav(1,event)">→</button>
+  <div class="lightbox-caption" id="lbCaption"></div>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta-box">
+    <div>
+      <h2>Your campus companion<br>is ready to download.</h2>
+      <p>Join 1,200+ students already studying smarter, earning from campus, and growing together.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="https://play.google.com/store/apps/details?id=com.versecitytech.campusverse" target="_blank" class="btn-green">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.33.19.7.24 1.07.14L15.84 12 4.25.1C3.88 0 3.51.05 3.18.24 2.49.63 2 1.42 2 2.37v19.26c0 .95.49 1.74 1.18 2.13zM17.4 13.56 6.95 24l9.02-5.21 1.43-5.23zM22.1 10.3c-.48-.28-1.12-.44-1.72-.12L18.7 11.3l1.6.7 1.68.97c.6.32 1.24.16 1.72-.12.72-.41 1.06-1.1 1.06-1.7 0-.58-.34-1.28-1.06-1.55zM6.95 0 17.4 10.44 15.97 5.21 6.95 0z"/></svg>
+        Download on Play Store
+      </a>
+      <a href="https://versecity-edutech-sector.web.app/" target="_blank" class="btn-ghost-white">Visit VerseCity ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-wrap">
+  <p>© 2024 Campus Verse · A product of <a href="https://versecity-edutech-sector.web.app/" target="_blank">VerseCity Technology</a></p>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+    <a href="https://versecity-edutech-sector.web.app/" target="_blank">VerseCity ↗</a>
+  </div>
+</div>
+
+<script>
+  // ── Screenshot data ──
+  const slides = [
+    { src:'screenshot-1.png', label:'🏠 Home' },
+    { src:'screenshot-2.png', label:'📚 Materials Library' },
+    { src:'screenshot-3.png', label:'📝 Past Questions' },
+    { src:'screenshot-4.png', label:'📌 Notice Board' },
+    { src:'screenshot-5.png', label:'⬆️ Upload Materials' },
+    { src:'screenshot-6.png', label:'🎓 Skill Tutorials' },
+    { src:'screenshot-7.png', label:'🤝 Community' },
+    { src:'screenshot-8.png', label:'👤 Student Profile' },
+  ];
+
+  let lbIndex = 0;
+
+  // Scroll track by one card width
+  function scrollSlides(dir) {
+    const track = document.getElementById('ssTrack');
+    const cardW = track.children[0].offsetWidth + 16;
+    track.scrollBy({ left: dir * cardW * 2, behavior:'smooth' });
+  }
+
+  function goToSlide(i) {
+    const track = document.getElementById('ssTrack');
+    const cardW = track.children[0].offsetWidth + 16;
+    track.scrollTo({ left: i * cardW, behavior:'smooth' });
+  }
+
+  // Update dots on scroll
+  document.getElementById('ssTrack').addEventListener('scroll', function() {
+    const track = this;
+    const cardW = track.children[0].offsetWidth + 16;
+    const i = Math.round(track.scrollLeft / cardW);
+    document.querySelectorAll('.ss-dot').forEach((d,idx) => d.classList.toggle('active', idx===i));
+  });
+
+  // Lightbox
+  function openLightbox(i) {
+    lbIndex = i;
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lbImg');
+    const cap = document.getElementById('lbCaption');
+    img.src = slides[i].src;
+    cap.textContent = slides[i].label;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.currentTarget.classList.contains('lightbox-close')) return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function lbNav(dir, e) {
+    e && e.stopPropagation();
+    lbIndex = (lbIndex + dir + slides.length) % slides.length;
+    document.getElementById('lbImg').src = slides[lbIndex].src;
+    document.getElementById('lbCaption').textContent = slides[lbIndex].label;
+  }
+
+  // Keyboard nav for lightbox
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')});
+    if (e.key === 'ArrowRight') lbNav(1, null);
+    if (e.key === 'ArrowLeft') lbNav(-1, null);
+  });
+</script>
+</body>
+</html>
